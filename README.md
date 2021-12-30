@@ -30,5 +30,5 @@ Please make sure to update tests as appropriate.
 ## License
 Apache-2.0 - Listed on this repository 
 
-#Affiliations
+## Affiliations
 This has no affiliations with WolframAlpha, use at your own risk.
