@@ -20,6 +20,8 @@ Use [prefix]help on a Discord server that the bot is in, it will show you a help
 
 Use [prefix][maths here] on a Discord server that the bot is in, it will send back an image from the WolframAlpha API
 
+![WolframAlphaBot](https://user-images.githubusercontent.com/59136907/147773169-1a3ada38-50b8-49d6-b4ac-c525eba5fcad.gif)
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
@@ -27,3 +29,6 @@ Please make sure to update tests as appropriate.
 
 ## License
 Apache-2.0 - Listed on this repository 
+
+#Affiliations
+This has no affiliations with WolframAlpha, use at your own risk.
