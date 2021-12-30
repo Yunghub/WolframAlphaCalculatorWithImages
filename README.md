@@ -1,6 +1,7 @@
-# WolframAlpha Discord Bot Calculator With Images
+# Simple Discord Bot Calculator With Images
 
 This is a Discord bot that uses Wolfram Alpha's API to solve your maths problems.
+All of the configurations are in config.js and they can be easily edited to match your use case.
 
 ## Installation
 
@@ -9,7 +10,6 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the pac
 ```bash
 pip install -r requirements.txt
 ```
-requirements.txt not ready yet, will be uploaded in the next update
 
 Register yourself a WolframAlpha [API key](https://products.wolframalpha.com/api/)
 
@@ -28,7 +28,8 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update tests as appropriate.
 
 ## License
-Apache-2.0 - Listed on this repository 
+Apache-2.0 - Listed on this repository, can be also found [here](https://www.apache.org/licenses/LICENSE-2.0)
 
 ## Affiliations
-This has no affiliations with WolframAlpha, use at your own risk.
+This has no affiliations with WolframAlpha, the image above is under copyright of WolframAlpha.
+If you use this inappropriately, its at your own risk.
