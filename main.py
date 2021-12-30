@@ -12,7 +12,6 @@
 #           This software is under the Apache-2.0 License
 #########################################################################
 
-
 import discord
 from discord.ext import commands
 import requests
@@ -23,7 +22,6 @@ from urllib import parse as urlparse
 
 global config
 config = None
-
 
 def start():
     global config
@@ -50,7 +48,6 @@ start()
 
 bot = commands.Bot(command_prefix=config["Prefix"])
 bot.remove_command("help")
-
 
 @bot.command()
 async def help(ctx):
