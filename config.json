@@ -1,0 +1,11 @@
+{
+  "WolframAlplha_API_TOKEN": "TOKEN",
+  "Discord_TOKEN": "TOKEN",
+  "Activity": "Bot activity here",
+  "Prefix": "m ",
+  "Embed_Title": "Yungs Math Bot",
+  "Embed_Title_URL": "https://yungcz.com",
+  "Embed_Description": "I like to solve maths equations, just like Kamran the mathematician!",
+  "Embed_Colour": 16777215,
+  "Embed_Thumbnail": "https://i.imgur.com/U067iC8.jpg"
+}
