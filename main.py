@@ -1,19 +1,21 @@
-#########################################################################
-#                          Discord Maths Bot
-#       This is a calculator Discord bot that uses Wolfram Alpha
-#           You can use this to solve and display equations     
-#
-#                    This is coded by Yung#1000
-#
-#                   Copyright (c) 2021, YungCZ.com
-#                       All rights reserved.
-#  This source code is licensed under the BSD-style license found in the
-#       LICENSE file in the root directory of this source tree. 
-#           This software is under the Apache-2.0 License
-#########################################################################
+##########################################################################
+#                          Discord Maths Bot                             #
+#       This is a calculator Discord bot that uses Wolfram Alpha         #
+#           You can use this to solve and display equations              #
+#                                                                        #
+#                     This is coded by Yung#1000                         #
+#                                                                        #
+#                   Copyright (c) 2021, YungCZ.com                       #
+#                       All rights reserved.                             #
+#  This source code is licensed under the BSD-style license found in the #
+#       LICENSE file in the root directory of this source tree.          #
+#           This software is under the Apache-2.0 License                #
+##########################################################################
+
 
 import discord
 from discord.ext import commands
+from discord.ext.commands import CommandNotFound
 import requests
 import datetime
 import io
@@ -22,6 +24,7 @@ from urllib import parse as urlparse
 
 global config
 config = None
+
 
 def start():
     global config
@@ -49,6 +52,7 @@ start()
 bot = commands.Bot(command_prefix=config["Prefix"])
 bot.remove_command("help")
 
+
 @bot.command()
 async def help(ctx):
     embed = discord.Embed(title = config["Embed_Title"], url = config["Embed_Title_URL"], colour = config["Embed_Colour"], description = config["Embed_Description"], timestamp=datetime.datetime.utcnow())
@@ -71,18 +75,22 @@ async def on_ready():
         print ("Something is wrong with starting the bot, are you sure everything you've entered is correct?")
         raise Exception
 
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, CommandNotFound):
+        return
+    raise error
+
 @bot.listen()
 async def on_message(message):
     if "y, maths help" in message.content.lower():
         return
     elif "y, maths" in message.content.lower():
-        await message.add_reaction("✅")
+        await message.add_reaction("⌛")
         ask = message.content
         
         ask = ask[len(config["Prefix"]):]
-        print (ask)
         url = str("http://api.wolframalpha.com/v1/simple?appid=" + str(config['WolframAlplha_API_TOKEN']) + "&i=" + urlparse.quote(ask))
-        print (url)
 
         request = requests.get(url)
 
@@ -90,11 +98,9 @@ async def on_message(message):
             await message.channel.send("Invalid App ID")
         else:
             await message.channel.send(file=discord.File(fp=io.BytesIO(request.content), filename="WolframAlphaBot.gif"))
+            await message.clear_reaction("⌛")
+            await message.add_reaction("✅")
         return
 
 
 bot.run(config["Discord_TOKEN"])
-
-
-
-
