@@ -12,7 +12,9 @@
 #           This software is under the Apache-2.0 License                #
 ##########################################################################
 
+# Version 1.1
 
+# Importing Libraries
 import discord
 from discord.ext import commands
 from discord.ext.commands import CommandNotFound
@@ -22,10 +24,11 @@ import io
 import json
 from urllib import parse as urlparse
 
+# Setting Variables
 global config
 config = None
 
-
+# Creating config.yml if not existance
 def start():
     global config
     try:
@@ -47,12 +50,14 @@ def start():
         raise Exception ("Fill in your config.json before continuing")
         exit()
 
+# Perform start function
 start()
 
+# Register the bot
 bot = commands.Bot(command_prefix=config["Prefix"])
 bot.remove_command("help")
 
-
+# On command help
 @bot.command()
 async def help(ctx):
     embed = discord.Embed(title = config["Embed_Title"], url = config["Embed_Title_URL"], colour = config["Embed_Colour"], description = config["Embed_Description"], timestamp=datetime.datetime.utcnow())
@@ -75,28 +80,35 @@ async def on_ready():
         print ("Something is wrong with starting the bot, are you sure everything you've entered is correct?")
         raise Exception
 
+# Ignore command not found, no more console spam
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, CommandNotFound):
         return
     raise error
 
+# Listens for maths
 @bot.listen()
-async def on_message(message):
+async def on_message(message): # Ignores the help command
     if "y, maths help" in message.content.lower():
         return
-    elif "y, maths" in message.content.lower():
+    elif "y, maths" in message.content.lower(): # When it is not the maths command
         await message.add_reaction("⌛")
-        ask = message.content
+        ask = message.content # Store what the user has asked
         
+        # Ignores the prefix
         ask = ask[len(config["Prefix"]):]
+        # Format API URL
         url = str("http://api.wolframalpha.com/v1/simple?appid=" + str(config['WolframAlplha_API_TOKEN']) + "&i=" + urlparse.quote(ask))
 
+        # Get request
         request = requests.get(url)
 
+        # Check for invalid appid returned from API
         if request.content == "Error 1: Invalid appid":
             await message.channel.send("Invalid App ID")
         else:
+            # Converts the media from WolframAlpha API to be sent on discord
             await message.channel.send(file=discord.File(fp=io.BytesIO(request.content), filename="WolframAlphaBot.gif"))
             await message.clear_reaction("⌛")
             await message.add_reaction("✅")
