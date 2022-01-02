@@ -12,7 +12,7 @@
 #           This software is under the Apache-2.0 License                #
 ##########################################################################
 
-# Version 1.1
+# Version 1.1.1 Bug Fix
 
 # Importing Libraries
 import discord
@@ -90,9 +90,10 @@ async def on_command_error(ctx, error):
 # Listens for maths
 @bot.listen()
 async def on_message(message): # Ignores the help command
-    if "y, maths help" in message.content.lower():
+    prefix = config["Prefix"]
+    if prefix + "help" in message.content.lower():
         return
-    elif "y, maths" in message.content.lower(): # When it is not the maths command
+    elif prefix in message.content.lower(): # When it is not the maths command
         await message.add_reaction("⌛")
         ask = message.content # Store what the user has asked
         
