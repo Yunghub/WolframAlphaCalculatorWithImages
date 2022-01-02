@@ -105,15 +105,24 @@ async def on_message(message): # Ignores the help command
         # Get request
         request = requests.get(url)
 
-        # Check for invalid appid returned from API
-        if request.content == "Error 1: Invalid appid":
-            await message.channel.send("Invalid App ID")
+        # Check for invalid response size returned from API
+        if len(request.content) < 10000:
+            await message.clear_reaction("⌛")
+            await message.add_reaction("❎")
+            embed = discord.Embed(title = config["Embed_Title"], url = config["Embed_Title_URL"], colour = config["Embed_Colour"], description = "Something went wrong whilst getting request from WolframAlpha API, here are some common issues:", timestamp=datetime.datetime.utcnow())
+            embed.set_thumbnail(url = config["Embed_Thumbnail"])
+            embed.add_field(name="🧰 Trouble Shooting", value = "Here are some common errors that you might be able to fix yourself.", inline=False)
+            embed.add_field(name="🔑 API Key Error", value = "Are you sure you copied the API key correctly?", inline=True)
+            embed.add_field(name="📙 Config Error", value = "Regenerate the config.json file by deleting it!", inline=True)
+            embed.add_field(name="📝 Typing Error", value = "Are you sure the question you're asking is appropriate?", inline=True)
+            embed.add_field(name="❓ Unknown Problem?", value = "Either get in contact with Yung or make an issue on our Github Repository [here](https://github.com/Yunghub/WolframAlphaCalculatorWithImages)", inline=False)
+            embed.set_footer(text = "This bot is coded by Yung, open source at Github, YungHub, YungCZ.com", icon_url="https://i.imgur.com/U067iC8.jpg")
+            await message.channel.send(embed = embed)
         else:
             # Converts the media from WolframAlpha API to be sent on discord
             await message.channel.send(file=discord.File(fp=io.BytesIO(request.content), filename="WolframAlphaBot.gif"))
             await message.clear_reaction("⌛")
             await message.add_reaction("✅")
         return
-
 
 bot.run(config["Discord_TOKEN"])
